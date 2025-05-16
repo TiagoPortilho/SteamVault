@@ -1,0 +1,164 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(45deg, #151c31, #2a3555);
+}
+
+.card {
+  position: relative;
+  width: 550px;
+  height: 280px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition: all 0.5s ease;
+  margin: 20px;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card:hover img {
+  transform: scale(1.1);
+}
+
+.card .game-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 25px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  color: #fff;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.card:hover .game-title {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.card .game-title h2 {
+  font-size: 1.8em;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.card .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(21, 28, 49, 0.9),
+    rgba(21, 28, 49, 0.7)
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+.card .overlay h2 {
+  color: #fff;
+  font-size: 2em;
+  margin-bottom: 15px;
+  transform: translateY(-30px);
+  transition: transform 0.5s ease;
+}
+
+.card:hover .overlay h2 {
+  transform: translateY(0);
+}
+
+.card .overlay .info {
+  display: flex;
+  margin-bottom: 25px;
+}
+
+.card .overlay .info-item {
+  margin-right: 30px;
+  transform: translateY(-30px);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.card .overlay .info-item:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.card .overlay .info-item:nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+.card .overlay .info-item:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+.card:hover .overlay .info-item {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.card .overlay .info-label {
+  color: #aaa;
+  font-size: 0.9em;
+  margin-bottom: 5px;
+}
+
+.card .overlay .info-value {
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.1em;
+}
+
+.card .overlay .btn {
+  background: linear-gradient(45deg, #4a19a8, #0f3d5c);
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 25px;
+  border-radius: 30px;
+  font-weight: 500;
+  display: inline-block;
+  transform: translateY(30px);
+  opacity: 0;
+  transition: all 0.5s ease;
+  transition-delay: 0.4s;
+}
+
+.card:hover .overlay .btn {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.card .overlay .btn:hover {
+  background: linear-gradient(45deg, #6322de, #1d4f70);
+  box-shadow: 0 5px 15px #8654e6;
+}
