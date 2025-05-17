@@ -20,6 +20,13 @@ function App() {
     status: "Jogando",
     category: "Ação/RPG",
   };
+  const littlebigplanet = {
+    title: "Little Big Planet",
+    image: "https://image.api.playstation.com/vulcan/img/rnd/202010/2122/vQqEXW0BefsUqAyJTelwjmuA.png",
+    playtime: "5000h",
+    status: "Finalizado",
+    category: "Plataforma",
+  }
 
   return (
     <div className="app-container">
@@ -28,6 +35,7 @@ function App() {
         <div className="container">
           <GameCard game={witcher} />
           <GameCard game={cyberpunk} />
+          <GameCard game={littlebigplanet} />
         </div>
       </div>
     </div>

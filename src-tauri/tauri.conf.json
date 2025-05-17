@@ -12,14 +12,17 @@
   "app": {
     "windows": [
       {
-        "title": "steamvault",
-        "width": 800,
-        "height": 600
+        "title": "SteamVault",
+        "minWidth": 800,
+        "minHeight": 600,
+        "resizable": true,
+        "maximized": true
       }
     ],
     "security": {
       "csp": null
     }
+
   },
   "bundle": {
     "active": true,
