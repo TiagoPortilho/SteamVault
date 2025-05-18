@@ -1,8 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&display=swap");
 .card {
   position: relative;
   width: 100%;
   max-width: 500px;
-  aspect-ratio: 2 / 1; /* Mantém formato bonito e adaptável */
+  aspect-ratio: 2 / 1;
   border-radius: 15px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
   overflow: hidden;

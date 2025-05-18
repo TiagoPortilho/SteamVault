@@ -3,6 +3,7 @@ import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/core";
 import Sidebar from "./components/Sidebar";
 import GameCard from "./components/GameCard";
+import Header from "./components/Header";
 import "./App.css";
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
     <div className="app-container">
       <Sidebar />
       <div className="main-content">
+        <Header title="Home" />
         <div className="container">
           <GameCard game={witcher} />
           <GameCard game={cyberpunk} />

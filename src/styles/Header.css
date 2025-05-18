@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&display=swap");
+
+.header{
+top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px;
+  color: #e0e0e0;
+  border-bottom: 1px solid #242424;
+  font-size: 25px;
+}
+.page-title {
+    position: relative;
+    top: 6px;
+    left: 30px;
+}
+
+.searchbar {
+  position: relative;
+  width: 50vh;
+  margin-right: 5vh;
+}
+
+.searchbar input {
+  width: 100%;
+  background-color: #242424;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 36px 10px 12px;
+  color: #e0e0e0;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.searchbar input:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px #4a19a8;
+}
+
+.searchbar .search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #888;
+}
