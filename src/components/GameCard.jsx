@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/GameCard.css";
+import { Link } from "react-router-dom";
 
 function GameCard({ game }) {
   return (
@@ -24,7 +25,9 @@ function GameCard({ game }) {
             <div className="info-value">{game.category}</div>
           </div>
         </div>
-        <a href="#" className="btn">Ver Detalhes</a>
+        <Link to="/verdetalhes" className="btn">
+          Ver Detalhes
+        </Link>
       </div>
     </div>
   );
