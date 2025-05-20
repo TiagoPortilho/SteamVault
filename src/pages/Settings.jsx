@@ -1,15 +1,23 @@
 import { useState } from "react";
-import { invoke } from "@tauri-apps/api/core";
+import { invoke } from "@tauri-apps/api/tauri";
 import Header from "../components/Header";
 import "../styles/Settings.css";
 
 function Settings() {
+  // Default state for the Steam directory path
   const [steamPath, setSteamPath] = useState("C:\\Program Files (x86)\\Steam");
 
-  const handleBrowseClick = () => {
-    // Futuramente usar o Tauri dialog.open() pra escolher a pasta
-    console.log("Botão de procurar clicado!");
-  };
+  // Function to handle the "Browse" button click
+  // This function will invoke the Tauri command to get the Steam directory
+  const handleBrowseClick = async () => {
+  try {
+    const path = await invoke("ler_steam_dir");
+    console.log("Diretório da Steam:", path);
+    setSteamPath(path);
+  } catch (error) {
+    console.error("Erro ao invocar o comando:", error);
+  }
+};
 
   return (
     <div>

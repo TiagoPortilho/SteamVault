@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { invoke } from "@tauri-apps/api/core";
+import { invoke } from "@tauri-apps/api/tauri";
 import GameCard from "../components/GameCard";
 import Header from "../components/Header";
 import "../styles/Home.css";
