@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&display=swap");
+
+.config-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  max-width: 60%;
+  margin: 40px auto;
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  font-family: sans-serif;
+}
+
+.config-container h2 {
+  font-family: "Manjari", sans-serif;
+  margin-bottom: 25px;
+  font-size: 1.6rem;
+  font-weight: lighter;
+  text-align: center;
+}
+
+.form-group {
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-family: "Manjari", sans-serif;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2a2a2a;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px #4a19a8;
+}
+
+.form-group select {
+  background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  appearance: none;
+}
+
+.directory-input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.directory-input-group input {
+  flex: 1;
+}
+
+.browse-button {
+  padding: 10px 15px;
+  background-color: #444;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+.browse-button:hover {
+  background-color: #4a19a8;
+}
+
+.save-button {
+  margin-top: 20px;
+  width: 50%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4a19a8;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.save-button:hover {
+  background-color: #421694;
+}
