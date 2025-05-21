@@ -1,61 +1,68 @@
 @import url("https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&display=swap");
 
+:root {
+  --primary-color: #4a19a8;
+  --bg-dark: #1e1e1e;
+  --bg-light: #2a2a2a;
+  --text-color: #ffffff;
+  --border-radius: 10px;
+}
+
+body {
+  background-color: #121212;
+}
+
 .config-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px;
-  max-width: 60%;
+  padding: 40px;
+  max-width: 700px;
   margin: 40px auto;
-  background-color: #1e1e1e;
-  color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-  font-family: sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  font-family: "Manjari", sans-serif;
 }
 
 .config-container h2 {
-  font-family: "Manjari", sans-serif;
-  margin-bottom: 25px;
-  font-size: 1.6rem;
-  font-weight: lighter;
-  text-align: center;
+  font-weight: 600;
+  margin-bottom: 30px;
+  font-size: 1.8rem;
 }
 
 .form-group {
-  width: 80%;
-  margin-bottom: 20px;
+  width: 100%;
+  margin-bottom: 24px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
-  font-family: "Manjari", sans-serif;
+  margin-bottom: 10px;
+  font-weight: 500;
 }
 
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 10px;
+  padding: 12px 14px;
   border: none;
-  border-radius: 8px;
-  background-color: #2a2a2a;
-  color: #fff;
+  border-radius: var(--border-radius);
+  background-color: var(--bg-light);
+  color: var(--text-color);
   font-size: 1rem;
+  transition: box-shadow 0.2s ease;
+}
+.form-group input{
+  width: 96%;
+  padding-right: 12px;
 }
 
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  box-shadow: 0 0 0 1px #4a19a8;
-}
-
-.form-group select {
-  background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px;
-  appearance: none;
+  box-shadow: 0 0 0 2px var(--primary-color);
 }
 
 .directory-input-group {
@@ -68,33 +75,78 @@
 }
 
 .browse-button {
-  padding: 10px 15px;
+  padding: 12px 16px;
   background-color: #444;
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   cursor: pointer;
   transition: background-color 0.3s;
   white-space: nowrap;
 }
 
 .browse-button:hover {
-  background-color: #4a19a8;
+  background-color: var(--primary-color);
 }
 
 .save-button {
-  margin-top: 20px;
-  width: 50%;
-  padding: 12px;
+  width: 100%;
+  padding: 14px;
   border: none;
-  border-radius: 8px;
-  background-color: #4a19a8;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
   color: white;
-  font-size: 1rem;
+  font-size: 1.05rem;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .save-button:hover {
-  background-color: #421694;
+  background-color: #3b1586;
+}
+
+.toggle {
+  display: flex;
+  background-color: var(--bg-light);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  border: 1px solid #333;
+}
+
+.toggle-option {
+  flex: 1;
+  text-align: center;
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  font-weight: 500;
+  color: #aaa;
+}
+
+.toggle-option:hover {
+  background-color: #333;
+}
+
+.toggle-option.active {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.api-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  margin-left: 6px;
+  font-weight: bold;
+}
+
+.api-link:hover {
+  text-decoration: underline;
+}
+
+.form-group select {
+  background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+  appearance: none;
 }
