@@ -1,23 +1,6 @@
-use tauri::api::dialog::FileDialogBuilder;
 use std::fs;
 use serde::{Serialize, Deserialize};
 use tauri::api::path::app_config_dir;
-
-/// Comando para selecionar o diretório da Steam
-#[tauri::command]
-pub fn ler_steam_dir() -> Option<String> {
-    let (tx, rx) = std::sync::mpsc::channel();
-
-    FileDialogBuilder::new()
-        .set_title("Select Steam folder")
-        .pick_folder(move |folder_path| {
-            if let Some(path) = folder_path {
-                tx.send(path.display().to_string()).ok();
-            }
-        });
-
-    rx.recv().ok()
-}
 
 /// Estrutura de configuração
 #[derive(Serialize, Deserialize, Debug)]

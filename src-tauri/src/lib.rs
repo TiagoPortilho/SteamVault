@@ -4,7 +4,6 @@ mod commands;
 pub fn run() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
-            commands::ler_steam_dir,
             commands::salvar_configuracoes,
             commands::carregar_configuracoes
         ])
