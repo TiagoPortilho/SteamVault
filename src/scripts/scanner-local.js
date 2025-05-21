@@ -60,10 +60,7 @@ function getInstalledGames(libraries, steamPath = DEFAULT_STEAM_PATH) {
             games.push({
               appid: parseInt(app.appid),
               name: app.name,
-              installdir: app.installdir,
-              lastUpdated: app.LastUpdated,
-              sizeOnDisk: app.SizeOnDisk,
-              buildid: app.buildid,
+              sizeOnDisk: app.SizeOnDisk
             });
           }
         } catch (err) {

@@ -9,3 +9,18 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model GameAPI {
+  id              Int     @id @default(autoincrement())
+  appid           Int     @unique
+  name            String
+  playtimeMinutes Int
+  fullyAchieved   Boolean
+}
+
+model GameLocal {
+  id              Int     @id @default(autoincrement())
+  appid           Int     @unique
+  name            String
+  sizeOnDisk      Int
+}
