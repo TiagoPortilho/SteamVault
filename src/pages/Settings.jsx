@@ -1,22 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import Header from "../components/Header";
 import "../styles/Settings.css";
 
 function Settings() {
-  const [steamPath, setSteamPath] = useState("C:\\Program Files (x86)\\Steam");
-  const [mode, setMode] = useState("local");
-
   const [apiKey, setApiKey] = useState("");
   const [steamId, setSteamId] = useState("");
+  const [status, setStatus] = useState("");
+  const [error, setError] = useState(false);
 
-  const handleBrowseClick = async () => {
+  
+  useEffect(() => {
+    const loadConfig = async () => {
+      try {
+        const config = await invoke("carregar_configuracoes");
+        if (config) {
+          setApiKey(config.api_key);
+          setSteamId(config.steam_id);
+          console.log("Configurações carregadas:", config);
+        }
+      } catch (error) {
+        console.log("Nenhuma configuração encontrada.");
+      }
+    };
+
+    loadConfig();
+  }, []);
+
+  const handleSave = async () => {
     try {
-      const path = await invoke("ler_steam_dir");
-      console.log("Diretório da Steam:", path);
-      setSteamPath(path);
+      await invoke("salvar_configuracoes", {
+        apiKey,
+        steamId,
+      });
+      setStatus("Configurações salvas com sucesso!");
+      setError(false);
+      setTimeout(() => setStatus(""), 3000);
     } catch (error) {
-      console.error("Erro ao invocar o comando:", error);
+      console.error("Erro ao salvar configurações:", error);
+      setStatus("Erro ao salvar configurações.");
+      setError(true);
+      setTimeout(() => setStatus(""), 3000);
     }
   };
 
@@ -36,74 +60,44 @@ function Settings() {
         </div>
 
         <div className="form-group">
-          <label>Mode</label>
-          <div className="toggle">
-            <div
-              className={
-                mode === "local" ? "toggle-option active" : "toggle-option"
-              }
-              onClick={() => setMode("local")}
+          <label>
+            API Key{" "}
+            <a
+              href="https://steamcommunity.com/dev/apikey"
+              target="_blank"
+              rel="noreferrer"
+              className="api-link"
             >
-              Local
-            </div>
-            <div
-              className={
-                mode === "api" ? "toggle-option active" : "toggle-option"
-              }
-              onClick={() => setMode("api")}
-            >
-              API
-            </div>
-          </div>
+              (Get your API key)
+            </a>
+          </label>
+          <input
+            type="text"
+            value={apiKey}
+            onChange={(e) => setApiKey(e.target.value)}
+            placeholder="Enter your Steam API key"
+          />
         </div>
 
-        {mode === "local" && (
-          <div className="form-group">
-            <label>Steam Directory</label>
-            <div className="directory-input-group">
-              <input type="text" value={steamPath} readOnly />
-              <button className="browse-button" onClick={handleBrowseClick}>
-                Search...
-              </button>
-            </div>
-          </div>
+        <div className="form-group">
+          <label>SteamID64</label>
+          <input
+            type="text"
+            value={steamId}
+            onChange={(e) => setSteamId(e.target.value)}
+            placeholder="Enter your SteamID64"
+          />
+        </div>
+
+        <button className="save-button" onClick={handleSave}>
+          Save
+        </button>
+
+        {status && (
+          <p className={`status-message ${error ? "error" : ""}`}>
+            {status}
+          </p>
         )}
-
-        {mode === "api" && (
-          <>
-            <div className="form-group">
-              <label>
-                API Key{" "}
-                <a
-                  href="https://steamcommunity.com/dev/apikey"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="api-link"
-                >
-                  (Get your API key)
-                </a>
-              </label>
-              <input
-                type="text"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                placeholder="Enter your Steam API key"
-              />
-            </div>
-
-            <div className="form-group">
-              <label>SteamID64</label>
-              <input
-                type="text"
-                value={steamId}
-                onChange={(e) => setSteamId(e.target.value)}
-                placeholder="Enter your SteamID64"
-              />
-            </div>
-          </>
-        )}
-
-        <button className="save-button">Save</button>
       </div>
     </div>
   );
