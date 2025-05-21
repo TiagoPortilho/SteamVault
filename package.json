@@ -12,19 +12,22 @@
   "dependencies": {
     "@prisma/client": "^6.8.1",
     "@tauri-apps/api": "^1.5.0",
+    "dotenv": "^16.5.0",
+    "node-fetch": "^3.3.2",
+    "node-vdf": "^0.0.3",
     "prisma": "^6.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.6.0"
+    "react-router-dom": "^7.6.0",
+    "vdf-extra": "^2.2.2"
   },
   "devDependencies": {
-  "@tauri-apps/cli": "^1.5.4",
-  "@vitejs/plugin-react": "^4.3.4",
-  "autoprefixer": "^10.4.21",
-  "postcss": "^8.5.3",
-  "prettier": "3.5.3",
-  "tailwindcss": "^4.1.7",
-  "vite": "^6.0.3"
-}
-
+    "@tauri-apps/cli": "^1.5.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "prettier": "3.5.3",
+    "tailwindcss": "^4.1.7",
+    "vite": "^6.0.3"
+  }
 }
