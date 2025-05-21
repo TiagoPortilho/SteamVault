@@ -55,6 +55,11 @@ body {
   transition: box-shadow 0.2s ease;
 }
 
+.form-group input{
+  width: 96%;
+  padding-right: 12px;
+}
+
 .form-group input:focus,
 .form-group select:focus {
   outline: none;

@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&display=swap");
 
 .header{
+  position: sticky;   
   height: 36px;
   top: 0;
   z-index: 10;
@@ -9,6 +10,7 @@
   justify-content: space-between;
   padding: 25px;
   color: #e0e0e0;
+  background-color: #121212;
   border-bottom: 1px solid #242424;
   font-size: 25px;
 }
