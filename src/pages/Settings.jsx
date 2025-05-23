@@ -8,8 +8,8 @@ function Settings() {
   const [steamId, setSteamId] = useState("");
   const [status, setStatus] = useState("");
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  
   useEffect(() => {
     const loadConfig = async () => {
       try {
@@ -29,18 +29,26 @@ function Settings() {
 
   const handleSave = async () => {
     try {
+      setLoading(true);
+      setStatus("Salvando configurações e sincronizando jogos... Isso pode levar até 2 minutos.");
+      setError(false);
+
       await invoke("salvar_configuracoes", {
         apiKey,
         steamId,
       });
-      setStatus("Configurações salvas com sucesso!");
+
+      await invoke("sync_games_from_steam");
+
+      setStatus("Configurações salvas e jogos sincronizados com sucesso!");
       setError(false);
-      setTimeout(() => setStatus(""), 3000);
     } catch (error) {
-      console.error("Erro ao salvar configurações:", error);
-      setStatus("Erro ao salvar configurações.");
+      console.error("Erro:", error);
+      setStatus("Erro ao salvar ou sincronizar. Verifique sua API Key e SteamID.");
       setError(true);
-      setTimeout(() => setStatus(""), 3000);
+    } finally {
+      setLoading(false);
+      setTimeout(() => setStatus(""), 5000);
     }
   };
 
@@ -89,8 +97,8 @@ function Settings() {
           />
         </div>
 
-        <button className="save-button" onClick={handleSave}>
-          Save
+        <button className="save-button" onClick={handleSave} disabled={loading}>
+          {loading ? "Salvando e Sincronizando..." : "Save and Sync"}
         </button>
 
         {status && (

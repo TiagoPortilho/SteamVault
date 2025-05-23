@@ -6,7 +6,9 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             commands::salvar_configuracoes,
             commands::carregar_configuracoes,
-            commands::get_player_game_info
+            commands::get_player_game_info,
+            commands::atualizar_jogos_do_steam,
+            commands::sync_games_from_steam,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
