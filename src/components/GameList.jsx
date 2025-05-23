@@ -12,7 +12,7 @@ function GameList() {
     async function loadGames() {
       try {
         setLoading(true);
-        const games = await invoke("get_all_games"); // Só busca os jogos já sincronizados
+        const games = await invoke("get_all_games"); 
         setGames(games);
       } catch (err) {
         setError(err.toString());
@@ -35,8 +35,8 @@ function GameList() {
           key={game.appid}
           game={{
             title: game.name,
-            playtime: `${game.playtime_minutes} min`,
-            platina: game.fully_achieved ? "Sim" : "Não",
+            playtime: `${game.playtimeMinutes} min`,
+            platina: game.fullyAchieved ? "Sim" : "Não",
             image: `https://cdn.cloudflare.steamstatic.com/steam/apps/${game.appid}/header.jpg`,
           }}
         />
