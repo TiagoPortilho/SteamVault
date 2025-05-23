@@ -24,9 +24,9 @@ function GameList() {
     loadGames();
   }, []);
 
-  if (loading) return <p>Carregando jogos...</p>;
-  if (error) return <p>Erro ao carregar jogos: {error}</p>;
-  if (games.length === 0) return <p>Nenhum jogo encontrado.</p>;
+  if (loading) return <p>Loading Games...</p>;
+  if (error) return <p>Error while loading games: {error}</p>;
+  if (games.length === 0) return <p>Please set you APIKEY and STEAMID in Settings.</p>;
 
   return (
     <div className="game-list">
@@ -35,8 +35,8 @@ function GameList() {
           key={game.appid}
           game={{
             title: game.name,
-            playtime: `${game.playtimeMinutes} min`,
-            platina: game.fullyAchieved ? "Sim" : "Não",
+            playtime: `${(game.playtimeMinutes / 60).toFixed(2)} Hours`,
+            platina: game.fullyAchieved ? "Platined" : "Not Platined",
             image: `https://cdn.cloudflare.steamstatic.com/steam/apps/${game.appid}/header.jpg`,
           }}
         />
