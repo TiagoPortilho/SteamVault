@@ -7,7 +7,6 @@ pub fn run() {
             commands::salvar_configuracoes,
             commands::carregar_configuracoes,
             commands::get_player_game_info,
-            commands::atualizar_jogos_do_steam,
             commands::sync_games_from_steam,
         ])
         .run(tauri::generate_context!())
