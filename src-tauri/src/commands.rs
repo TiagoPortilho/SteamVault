@@ -1,21 +1,24 @@
 use std::fs;
+use std::convert::TryInto;
 use serde::{Serialize, Deserialize};
 use tauri::api::path::app_config_dir;
 use reqwest;
 use sqlx::{SqlitePool, Result as SqlxResult};
+use sqlx::FromRow;
+
+#[derive(Debug, FromRow, Serialize, Deserialize)]
+pub struct Game {
+    pub appid: i32,
+    pub name: String,
+    pub playtimeMinutes: i32,
+    pub fullyAchieved: bool,
+}
+
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
     pub api_key: String,
     pub steam_id: String,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct Game {
-    pub appid: u32,
-    pub name: String,
-    pub playtime_minutes: u32,
-    pub fully_achieved: bool,
 }
 
 #[tauri::command]
@@ -124,9 +127,13 @@ pub async fn get_player_game_info(api_key: String, steam_id: String) -> Result<V
     let mut result = Vec::new();
 
     for game in games {
-        let appid = game["appid"].as_u64().unwrap_or(0) as u32;
+        let appid_u64 = game["appid"].as_u64().unwrap_or(0);
+        let appid: i32 = appid_u64.try_into().unwrap_or(0);
+
         let name = game["name"].as_str().unwrap_or("").to_string();
-        let playtime = game["playtime_forever"].as_u64().unwrap_or(0) as u32;
+
+        let playtime_u64 = game["playtime_forever"].as_u64().unwrap_or(0);
+        let playtime: i32 = playtime_u64.try_into().unwrap_or(0);
 
         println!("Processando jogo: {} (appid: {})", name, appid);
 
@@ -137,7 +144,7 @@ pub async fn get_player_game_info(api_key: String, steam_id: String) -> Result<V
 
         let ach_res = client.get(&ach_url).send().await;
 
-        let fully_achieved = match ach_res {
+        let fullyAchieved = match ach_res {
             Ok(resp) if resp.status().is_success() => {
                 let ach_json = resp.json::<serde_json::Value>().await.unwrap_or_default();
                 if let Some(achievements) = ach_json["playerstats"]["achievements"].as_array() {
@@ -159,8 +166,8 @@ pub async fn get_player_game_info(api_key: String, steam_id: String) -> Result<V
         result.push(Game {
             appid,
             name,
-            playtime_minutes: playtime,
-            fully_achieved,
+            playtimeMinutes: playtime,
+            fullyAchieved,
         });
     }
 
@@ -217,12 +224,26 @@ pub async fn sync_games(pool: &SqlitePool, games: Vec<Game>) -> SqlxResult<()> {
         )
         .bind(game.appid)
         .bind(game.name)
-        .bind(game.playtime_minutes)
-        .bind(game.fully_achieved as i32)
+        .bind(game.playtimeMinutes)
+        .bind(game.fullyAchieved as i32)
         .execute(pool)
         .await?;
     }
 
     println!("Todos os jogos foram inseridos no banco de dados.");
     Ok(())
+}
+
+#[tauri::command]
+pub async fn get_all_games() -> Result<Vec<Game>, String> {
+    let pool = connect_db().await.map_err(|e| e.to_string())?;
+
+    let games = sqlx::query_as::<_, Game>(
+        "SELECT appid, name, playtimeMinutes, fullyAchieved FROM Game"
+    )
+    .fetch_all(&pool)
+    .await
+    .map_err(|e| e.to_string())?;
+    
+    Ok(games)
 }

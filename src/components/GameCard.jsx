@@ -17,12 +17,8 @@ function GameCard({ game }) {
             <div className="info-value">{game.playtime}</div>
           </div>
           <div className="info-item">
-            <div className="info-label">Status</div>
-            <div className="info-value">{game.status}</div>
-          </div>
-          <div className="info-item">
-            <div className="info-label">Categoria</div>
-            <div className="info-value">{game.category}</div>
+            <div className="info-label">Troféus</div>
+            <div className="info-value">{game.platina}</div>
           </div>
         </div>
         <Link to="/verdetalhes" className="btn">
