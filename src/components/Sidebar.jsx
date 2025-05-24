@@ -8,7 +8,7 @@ function Sidebar() {
 
   const loadGames = async () => {
     try {
-      const games = await invoke("get_all_games");
+      const games = await invoke("side_games");
       setGames(games);
     } catch (err) {
       console.log(err.toString());

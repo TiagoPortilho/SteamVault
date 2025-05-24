@@ -22,7 +22,7 @@ function GameCard({ game }) {
           </div>
         </div>
         <Link to="/details" className="btn">
-          Details
+          <span>Details</span>
         </Link>
       </div>
     </div>

@@ -26,6 +26,9 @@
   inset: 0;
   z-index: 0;
   transition: transform 0.5s ease;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  backface-visibility: hidden;
 }
 
 .card:hover img {
@@ -140,13 +143,19 @@
   border-radius: 30px;
   font-weight: 500;
   font-size: 0.95em;
-  line-height: 1.2;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: normal;
   vertical-align: middle;
   transform: translateY(30px);
   opacity: 0;
   transition: all 0.5s ease;
   transition-delay: 0.4s;
+}
+
+.btn {
+  font-family: "Inter", sans-serif;
 }
 
 
