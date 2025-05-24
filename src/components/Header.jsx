@@ -1,10 +1,23 @@
 import React from "react";
+import { invoke } from "@tauri-apps/api/tauri";
 import "../styles/Header.css";
+import eventBus from "../scripts/event-bus";;
 
 function Header({ title }) {
   const searchbar = false;
   if (!title) {
     title = "SteamVault";
+  }
+
+  const readSearch = async () => {
+    const search = document.querySelector(".searchbar input").value;
+  
+    try {
+      const games = await invoke("search_games_by_name", { search });
+      eventBus.emit("searchResult", games);
+    } catch (error) {
+      console.error("Error searching for game:", error);
+    }
   }
 
   if (title === "Home") {
@@ -13,7 +26,7 @@ function Header({ title }) {
         <span className="page-title">{title}</span>
 
         <div className="searchbar">
-          <input type="text" placeholder="Buscar..." />
+          <input type="text" placeholder="Buscar..." onChange={readSearch}/>
           <svg
             className="search-icon"
             viewBox="0 0 24 24"

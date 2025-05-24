@@ -239,8 +239,26 @@ pub async fn get_all_games() -> Result<Vec<Game>, String> {
     let pool = connect_db().await.map_err(|e| e.to_string())?;
 
     let games = sqlx::query_as::<_, Game>(
-        "SELECT appid, name, playtimeMinutes, fullyAchieved FROM Game"
+        "SELECT appid, name, playtimeMinutes, fullyAchieved FROM Game ORDER BY playtimeMinutes DESC"
     )
+    .fetch_all(&pool)
+    .await
+    .map_err(|e| e.to_string())?;
+    
+    Ok(games)
+}
+
+
+#[tauri::command]
+pub async fn search_games_by_name(search: String) -> Result<Vec<Game>, String> {
+    let pool = connect_db().await.map_err(|e| e.to_string())?;
+    let game_name = format!("%{}%", search);
+
+    println!("Buscando jogos");
+    let games = sqlx::query_as::<_, Game>(
+        "SELECT appid, name, playtimeMinutes, fullyAchieved FROM Game WHERE name LIKE ? ORDER BY playtimeMinutes DESC"
+    )
+    .bind(game_name)
     .fetch_all(&pool)
     .await
     .map_err(|e| e.to_string())?;

@@ -2,31 +2,42 @@ import React, { useEffect, useState } from "react";
 import GameCard from "./GameCard";
 import "../styles/GameList.css";
 import { invoke } from "@tauri-apps/api/tauri";
+import eventBus from "../scripts/event-bus.js";
 
 function GameList() {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    async function loadGames() {
-      try {
-        setLoading(true);
-        const games = await invoke("get_all_games"); 
-        setGames(games);
-      } catch (err) {
-        setError(err.toString());
-      } finally {
-        setLoading(false);
-      }
+  const loadGames = async () => {
+    try {
+      setLoading(true);
+      const games = await invoke("get_all_games");
+      setGames(games);
+    } catch (err) {
+      setError(err.toString());
+    } finally {
+      setLoading(false);
     }
+  };
 
+  useEffect(() => {
     loadGames();
+
+    const handleSearchResult = (result) => {
+      setGames(result);
+    };
+
+    eventBus.on("searchResult", handleSearchResult);
+
+    return () => {
+      eventBus.off("searchResult", handleSearchResult);
+    };
   }, []);
 
   if (loading) return <p>Loading Games...</p>;
   if (error) return <p>Error while loading games: {error}</p>;
-  if (games.length === 0) return <p>Please set you APIKEY and STEAMID in Settings.</p>;
+  if (games.length === 0) return <p>No games found.</p>;
 
   return (
     <div className="game-list">

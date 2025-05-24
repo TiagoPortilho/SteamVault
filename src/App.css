@@ -6,6 +6,9 @@ body {
   font-family: "Manjari", sans-serif;
   background-color: #121212;
   color: #e0e0e0;
+  scrollbar-width: thin;
+  scrollbar-color: #4a19a8 transparent;
+  scrollbar-track-color: transparent;
 }
 
 .app-container {

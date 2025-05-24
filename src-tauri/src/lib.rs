@@ -9,6 +9,7 @@ pub fn run() {
             commands::get_player_game_info,
             commands::sync_games_from_steam,
             commands::get_all_games,
+            commands::search_games_by_name,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

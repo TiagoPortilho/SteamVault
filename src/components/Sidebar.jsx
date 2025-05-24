@@ -1,8 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/Sidebar.css";
 import { Link } from "react-router-dom";
+import { invoke } from "@tauri-apps/api/tauri";
 
 function Sidebar() {
+  const [games, setGames] = useState([]);
+
+  const loadGames = async () => {
+    try {
+      const games = await invoke("get_all_games");
+      setGames(games);
+    } catch (err) {
+      console.log(err.toString());
+    } finally {
+      console.log("Games loaded");
+    }
+  };
+
+  const handleSearchChange = async (e) => {
+    const search = e.target.value.trim();
+
+    if (search === "") {
+      loadGames();
+      return;
+    }
+
+    try {
+      const filteredGames = await invoke("search_games_by_name", { search });
+      setGames(filteredGames);
+    } catch (err) {
+      console.log(err.toString());
+      setGames([]);
+    } finally {
+      console.log("Search completed");
+    }
+  };
+
+  useEffect(() => {
+    loadGames();
+  }, []);
+
   return (
     <div className="sidebar">
       <div className="app-title">SteamVault</div>
@@ -10,7 +47,7 @@ function Sidebar() {
       <Link to="/" className="menu-item">
         <i>
           <svg
-            class="navicon"
+            className="navicon"
             viewBox="0 0 24 24"
             width="20"
             height="20"
@@ -40,16 +77,20 @@ function Sidebar() {
       <div className="section-title">LIBRARY</div>
 
       <div className="search-box">
-        <input type="text" placeholder="Buscar"></input>
+        <input
+          type="text"
+          placeholder="Buscar"
+          onChange={handleSearchChange}
+        />
       </div>
-
-      <a href="#" className="library-item">
-        <img
-          src="https://user-images.githubusercontent.com/17349406/57204220-9cd11a00-6ff9-11e9-933d-8834cf75049a.jpg"
-          alt="Game icon"
-        ></img>
-        <span>God of War</span>
-      </a>
+      
+      <div className="library-list">
+        {games.map((game) => (
+          <a key={game.appid} href="#" className="library-item">
+            <span>{game.name}</span>
+          </a>
+        ))}
+      </div>
     </div>
   );
 }

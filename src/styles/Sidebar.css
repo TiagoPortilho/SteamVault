@@ -118,3 +118,13 @@ body {
   border-radius: 4px;
   object-fit: cover;
 }
+
+
+
+.library-list {
+  overflow-y: auto;
+  max-height: 100vh; 
+  scrollbar-width: thin;
+  scrollbar-color: #121212 transparent;
+  scrollbar-track-color: transparent;
+}
