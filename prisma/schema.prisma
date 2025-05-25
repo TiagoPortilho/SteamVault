@@ -14,6 +14,14 @@ model Game {
   id              Int     @id @default(autoincrement())
   appid           Int     @unique
   name            String
-  playtimeMinutes Int
-  fullyAchieved   Boolean
+  playtime_minutes Int
+  fully_achieved   Boolean
+  finished String
+  trophies String
+}
+
+model Note {
+  id  Int @id @default(autoincrement())
+  appid Int
+  text String
 }

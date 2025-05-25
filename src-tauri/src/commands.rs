@@ -10,8 +10,8 @@ use sqlx::FromRow;
 pub struct Game {
     pub appid: i32,
     pub name: String,
-    pub playtimeMinutes: i32,
-    pub fullyAchieved: bool,
+    pub playtime_minutes: i32,
+    pub fully_achieved : bool,
 }
 
 
@@ -144,7 +144,7 @@ pub async fn get_player_game_info(api_key: String, steam_id: String) -> Result<V
 
         let ach_res = client.get(&ach_url).send().await;
 
-        let fullyAchieved = match ach_res {
+        let fully_achieved = match ach_res {
             Ok(resp) if resp.status().is_success() => {
                 let ach_json = resp.json::<serde_json::Value>().await.unwrap_or_default();
                 if let Some(achievements) = ach_json["playerstats"]["achievements"].as_array() {
@@ -166,8 +166,8 @@ pub async fn get_player_game_info(api_key: String, steam_id: String) -> Result<V
         result.push(Game {
             appid,
             name,
-            playtimeMinutes: playtime,
-            fullyAchieved,
+            playtime_minutes: playtime,
+            fully_achieved,
         });
     }
 
@@ -218,14 +218,14 @@ pub async fn sync_games(pool: &SqlitePool, games: Vec<Game>) -> SqlxResult<()> {
         println!("Inserindo jogo: {} (appid: {})", game.name, game.appid);
         sqlx::query(
             r#"
-            INSERT INTO Game (appid, name, playtimeMinutes, fullyAchieved)
+            INSERT INTO Game (appid, name, playtime_minutes, fully_achieved)
             VALUES (?, ?, ?, ?)
             "#,
         )
         .bind(game.appid)
         .bind(game.name)
-        .bind(game.playtimeMinutes)
-        .bind(game.fullyAchieved as i32)
+        .bind(game.playtime_minutes)
+        .bind(game.fully_achieved as i32)
         .execute(pool)
         .await?;
     }
@@ -239,7 +239,7 @@ pub async fn get_all_games() -> Result<Vec<Game>, String> {
     let pool = connect_db().await.map_err(|e| e.to_string())?;
 
     let games = sqlx::query_as::<_, Game>(
-        "SELECT appid, name, playtimeMinutes, fullyAchieved FROM Game ORDER BY playtimeMinutes DESC"
+        "SELECT appid, name, playtime_minutes, fully_achieved FROM Game ORDER BY playtime_minutes DESC"
     )
     .fetch_all(&pool)
     .await
@@ -256,7 +256,7 @@ pub async fn search_games_by_name(search: String) -> Result<Vec<Game>, String> {
 
     println!("Buscando jogos");
     let games = sqlx::query_as::<_, Game>(
-        "SELECT appid, name, playtimeMinutes, fullyAchieved FROM Game WHERE name LIKE ? ORDER BY playtimeMinutes DESC"
+        "SELECT appid, name, playtime_minutes, fully_achieved FROM Game WHERE name LIKE ? ORDER BY playtime_minutes DESC"
     )
     .bind(game_name)
     .fetch_all(&pool)
@@ -271,7 +271,7 @@ pub async fn side_games() -> Result<Vec<Game>, String> {
     let pool = connect_db().await.map_err(|e| e.to_string())?;
 
     let games = sqlx::query_as::<_, Game>(
-        "SELECT appid, name, playtimeMinutes, fullyAchieved FROM Game ORDER BY name ASC"
+        "SELECT appid, name, playtime_minutes, fully_achieved FROM Game ORDER BY name ASC"
     )
     .fetch_all(&pool)
     .await
