@@ -16,8 +16,8 @@ model Game {
   name            String
   playtime_minutes Int
   fully_achieved   Boolean
-  finished String
-  trophies String
+  finished String?
+  trophies String?
 }
 
 model Note {
