@@ -46,8 +46,8 @@ function GameList() {
           key={game.appid}
           game={{
             title: game.name,
-            playtime: `${(game.playtimeMinutes / 60).toFixed(2)} Hours`,
-            platina: game.fullyAchieved ? "Platined" : "Not Platined",
+            playtime: `${(game.playtime_minutes / 60).toFixed(2)} Hours`,
+            platina: game.fully_achieved ? "Platined" : "Not Platined",
             image: `https://cdn.cloudflare.steamstatic.com/steam/apps/${game.appid}/header.jpg`,
           }}
         />
