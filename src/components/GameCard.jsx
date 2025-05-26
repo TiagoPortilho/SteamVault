@@ -21,7 +21,7 @@ function GameCard({ game }) {
             <div className="info-value">{game.platina}</div>
           </div>
         </div>
-        <Link to="/details" className="btn">
+        <Link to={`/details/${game.appid}`} className="btn">
           <span>Details</span>
         </Link>
       </div>

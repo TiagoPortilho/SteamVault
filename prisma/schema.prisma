@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 datasource db {
   provider = "sqlite"
   url      = "file:./database/db.sqlite"
@@ -11,17 +8,21 @@ generator client {
 }
 
 model Game {
-  id              Int     @id @default(autoincrement())
-  appid           Int     @unique
-  name            String
-  playtime_minutes Int
+  id               Int     @id @default(autoincrement())
+  appid            Int     @unique
+  name             String
+  playtime_minutes  Int
   fully_achieved   Boolean
-  finished String?
-  trophies String?
+  finished         Boolean?
+  trophies         String?
+
+  notes            Note[]  // campo de relação necessário para o Prisma
 }
 
 model Note {
-  id  Int @id @default(autoincrement())
-  appid Int
-  text String
+  id     Int    @id @default(autoincrement())
+  appid  Int
+  text   String
+
+  game   Game   @relation(fields: [appid], references: [appid], onDelete: Cascade)
 }

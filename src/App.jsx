@@ -4,6 +4,7 @@ import { invoke } from "@tauri-apps/api/tauri";
 import Sidebar from "./components/Sidebar";
 import Home from "./pages/Home";
 import Settings from "./pages/Settings";
+import GameDetails from "./pages/GameDetails";
 import "./App.css";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/details/:appid" element={<GameDetails />} />
           </Routes>
         </div>
       </div>

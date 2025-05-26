@@ -1,5 +1,4 @@
 use std::fs;
-use std::convert::TryInto;
 use serde::{Serialize, Deserialize};
 use tauri::api::path::app_config_dir;
 use reqwest;
@@ -13,6 +12,7 @@ pub struct Game {
     pub playtime_minutes: i32,
     pub fully_achieved: bool,
     pub trophies: Option<String>,
+    pub finished: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -109,6 +109,7 @@ pub async fn get_player_game_info(api_key: String, steam_id: String) -> Result<V
             playtime_minutes: playtime,
             fully_achieved,
             trophies: trophies_string,
+            finished: None, 
         });
     }
 
@@ -135,13 +136,14 @@ pub async fn connect_db() -> SqlxResult<SqlitePool> {
 }
 
 pub async fn sync_games(pool: &SqlitePool, games: Vec<Game>) -> SqlxResult<()> {
+    // Limpa a tabela antes
     sqlx::query("DELETE FROM Game").execute(pool).await?;
 
     for game in games {
         sqlx::query(
             r#"
-            INSERT INTO Game (appid, name, playtime_minutes, fully_achieved, trophies)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO Game (appid, name, playtime_minutes, fully_achieved, trophies, finished)
+            VALUES (?, ?, ?, ?, ?, ?)
             "#,
         )
         .bind(game.appid)
@@ -149,6 +151,7 @@ pub async fn sync_games(pool: &SqlitePool, games: Vec<Game>) -> SqlxResult<()> {
         .bind(game.playtime_minutes)
         .bind(game.fully_achieved as i32)
         .bind(game.trophies.clone())
+        .bind(game.finished)
         .execute(pool)
         .await?;
     }
@@ -161,7 +164,7 @@ pub async fn get_all_games() -> Result<Vec<Game>, String> {
     let pool = connect_db().await.map_err(|e| e.to_string())?;
 
     let games = sqlx::query_as::<_, Game>(
-        "SELECT appid, name, playtime_minutes, fully_achieved, trophies FROM Game ORDER BY playtime_minutes DESC"
+        "SELECT appid, name, playtime_minutes, fully_achieved, trophies, finished FROM Game ORDER BY playtime_minutes DESC"
     )
     .fetch_all(&pool)
     .await
@@ -176,7 +179,7 @@ pub async fn search_games_by_name(search: String) -> Result<Vec<Game>, String> {
     let game_name = format!("%{}%", search);
 
     let games = sqlx::query_as::<_, Game>(
-        "SELECT appid, name, playtime_minutes, fully_achieved, trophies FROM Game WHERE name LIKE ? ORDER BY playtime_minutes DESC"
+        "SELECT appid, name, playtime_minutes, fully_achieved, trophies, finished FROM Game WHERE name LIKE ? ORDER BY playtime_minutes DESC"
     )
     .bind(game_name)
     .fetch_all(&pool)
@@ -191,11 +194,26 @@ pub async fn side_games() -> Result<Vec<Game>, String> {
     let pool = connect_db().await.map_err(|e| e.to_string())?;
 
     let games = sqlx::query_as::<_, Game>(
-        "SELECT appid, name, playtime_minutes, fully_achieved, trophies FROM Game ORDER BY name ASC"
+        "SELECT appid, name, playtime_minutes, fully_achieved, trophies, finished FROM Game ORDER BY name ASC"
     )
     .fetch_all(&pool)
     .await
     .map_err(|e| e.to_string())?;
 
     Ok(games)
+}
+
+#[tauri::command]
+pub async fn get_game_details(appid: i32) -> Result<Game, String> {
+    let pool = connect_db().await.map_err(|e| e.to_string())?;
+
+    let game = sqlx::query_as::<_, Game>(
+        "SELECT appid, name, playtime_minutes, fully_achieved, trophies, finished FROM Game WHERE appid = ?"
+    )
+    .bind(appid)
+    .fetch_one(&pool)
+    .await
+    .map_err(|e| e.to_string())?;
+
+    Ok(game)
 }

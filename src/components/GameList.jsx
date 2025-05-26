@@ -45,6 +45,7 @@ function GameList() {
         <GameCard
           key={game.appid}
           game={{
+            appid: game.appid,
             title: game.name,
             playtime: `${(game.playtime_minutes / 60).toFixed(2)} Hours`,
             platina: game.fully_achieved ? "Platined" : "Not Platined",
