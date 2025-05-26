@@ -5,6 +5,7 @@ import Sidebar from "./components/Sidebar";
 import Home from "./pages/Home";
 import Settings from "./pages/Settings";
 import GameDetails from "./pages/GameDetails";
+import Statistics from "./pages/Statistics";
 import "./App.css";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/details/:appid" element={<GameDetails />} />
+            <Route path="/statistics" element={<Statistics />} />
           </Routes>
         </div>
       </div>
