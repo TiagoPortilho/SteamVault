@@ -217,3 +217,36 @@ pub async fn get_game_details(appid: i32) -> Result<Game, String> {
 
     Ok(game)
 }
+
+#[tauri::command]
+pub async fn mark_game_as_finished(appid: u32) -> Result<(), String> {
+    let pool = connect_db().await.map_err(|e| e.to_string())?;
+
+    sqlx::query(
+        "UPDATE Game SET finished = 1 WHERE appid = ?"
+    )
+    .bind(appid)
+    .execute(&pool)
+    .await
+    .map_err(|e| e.to_string())?;
+
+    Ok(())
+}
+
+#[tauri::command]
+pub async fn unmark_game_as_finished(appid: u32) -> Result<(), String> {
+    let pool = connect_db().await.map_err(|e| e.to_string())?;
+
+    sqlx::query(
+        "UPDATE Game SET finished = 0 WHERE appid = ?"
+    )
+    .bind(appid)
+    .execute(&pool)
+    .await
+    .map_err(|e| e.to_string())?;
+
+    Ok(())
+}
+
+
+

@@ -12,6 +12,8 @@ pub fn run() {
             commands::search_games_by_name,
             commands::side_games,
             commands::get_game_details,
+            commands::mark_game_as_finished,
+            commands::unmark_game_as_finished,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
