@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
+import { open } from "@tauri-apps/api/shell";
 import Header from "../components/Header";
 import "../styles/Settings.css";
 
@@ -30,7 +31,9 @@ function Settings() {
   const handleSave = async () => {
     try {
       setLoading(true);
-      setStatus("Salvando configurações e sincronizando jogos... Isso pode levar até 2 minutos.");
+      setStatus(
+        "Salvando configurações e sincronizando jogos... Isso pode levar até 2 minutos."
+      );
       setError(false);
 
       await invoke("salvar_configuracoes", {
@@ -44,7 +47,9 @@ function Settings() {
       setError(false);
     } catch (error) {
       console.error("Erro:", error);
-      setStatus("Erro ao salvar ou sincronizar. Verifique sua API Key e SteamID.");
+      setStatus(
+        "Erro ao salvar ou sincronizar. Verifique sua API Key e SteamID."
+      );
       setError(true);
     } finally {
       setLoading(false);
@@ -70,14 +75,12 @@ function Settings() {
         <div className="form-group">
           <label>
             API Key{" "}
-            <a
-              href="https://steamcommunity.com/dev/apikey"
-              target="_blank"
-              rel="noreferrer"
-              className="api-link"
+            <span
+              onClick={() => open("https://steamcommunity.com/dev/apikey")}
+              className="api-link cursor-pointer underline"
             >
-              (Get your API key)
-            </a>
+              API Key
+            </span>
           </label>
           <input
             type="text"
@@ -102,9 +105,7 @@ function Settings() {
         </button>
 
         {status && (
-          <p className={`status-message ${error ? "error" : ""}`}>
-            {status}
-          </p>
+          <p className={`status-message ${error ? "error" : ""}`}>{status}</p>
         )}
       </div>
     </div>

@@ -23,6 +23,11 @@
       "identifier": "com.steamvault.app",
       "icon": ["icons/icon.ico"],
       "active": true
+    },
+    "allowlist": {
+      "shell": {
+        "open": true
+      }
     }
   }
 }

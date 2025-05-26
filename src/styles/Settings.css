@@ -71,6 +71,7 @@ body {
   text-decoration: none;
   margin-left: 6px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .api-link:hover {
