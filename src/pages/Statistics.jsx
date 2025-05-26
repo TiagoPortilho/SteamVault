@@ -21,12 +21,8 @@ function Statistics() {
 
   const totalGames = games.length;
   const finishedGames = games.filter((g) => g.finished === true).length;
-  const fullyAchievedGames = games.filter(
-    (g) => g.fully_achieved === true
-  ).length;
-
-  const totalPlaytimeHours =
-    games.reduce((acc, game) => acc + game.playtime_minutes, 0) / 60;
+  const fullyAchievedGames = games.filter((g) => g.fully_achieved === true).length;
+  const totalPlaytimeHours = games.reduce((acc, game) => acc + game.playtime_minutes, 0) / 60;
 
   const topGames = [...games]
     .sort((a, b) => b.playtime_minutes - a.playtime_minutes)
@@ -73,9 +69,7 @@ function Statistics() {
                         className="progress-fill"
                         style={{
                           width: `${Math.min(
-                            (game.playtime_minutes /
-                              topGames[0].playtime_minutes) *
-                              100,
+                            (game.playtime_minutes / topGames[0].playtime_minutes) * 100,
                             100
                           )}%`,
                         }}
