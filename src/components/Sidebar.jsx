@@ -86,9 +86,9 @@ function Sidebar() {
       
       <div className="library-list">
         {games.map((game) => (
-          <a key={game.appid} href="#" className="library-item">
+          <Link to={`/details/${game.appid}`} className="library-item">
             <span>{game.name}</span>
-          </a>
+          </Link>
         ))}
       </div>
     </div>

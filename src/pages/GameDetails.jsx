@@ -120,7 +120,7 @@ const GameDetails = () => {
               <div className="stat">
                 <span className="label">Achievements</span>
                 <span className="value">
-                  {game.trophies ? `${game.trophies}` : "Nenhuma"}
+                  {game.trophies ? `${game.trophies}` : "None"}
                 </span>
               </div>
               <div className="stat">
