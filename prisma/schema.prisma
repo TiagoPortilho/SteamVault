@@ -15,14 +15,4 @@ model Game {
   fully_achieved   Boolean
   finished         Boolean?
   trophies         String?
-
-  notes            Note[]  // campo de relação necessário para o Prisma
-}
-
-model Note {
-  id     Int    @id @default(autoincrement())
-  appid  Int
-  text   String
-
-  game   Game   @relation(fields: [appid], references: [appid], onDelete: Cascade)
 }
