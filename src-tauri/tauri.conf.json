@@ -1,6 +1,6 @@
 {
   "build": {
-    "beforeBuildCommand": "",
+    "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
     "devPath": "http://localhost:1420",
     "distDir": "../dist"
@@ -22,7 +22,8 @@
     "bundle": {
       "identifier": "com.steamvault.app",
       "icon": ["icons/icon.ico"],
-      "active": true
+      "active": true,
+      "targets": ["msi"]
     },
     "allowlist": {
       "shell": {

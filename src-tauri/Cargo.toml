@@ -2,7 +2,7 @@
 name = "steamvault"
 version = "0.1.0"
 description = "A Tauri App"
-authors = ["you"]
+authors = ["Tiago Portilho"]
 edition = "2021"
 
 [lib]
@@ -10,12 +10,16 @@ name = "steamvault_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-tauri-build = { version = "1", features = [] }
+tauri-build = { version = "1.5.2", features = [] }
 
 [dependencies]
-tauri = { version = "1", features = [ "shell-open", "dialog"] }
+tauri = { version = "1.5.2", features = ["shell-open", "dialog", "custom-protocol"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 reqwest = { version = "0.11", features = ["json", "blocking", "rustls-tls"] }
 tokio = { version = "1", features = ["full"] }
 sqlx = { version = "0.7", features = ["sqlite", "runtime-tokio-native-tls", "macros"] }
+
+[features]
+default = ["custom-protocol"]          # opcional: coloca custom-protocol no build padrão
+custom-protocol = ["tauri/custom-protocol"]
