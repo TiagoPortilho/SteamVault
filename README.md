@@ -1,6 +1,6 @@
 <h1 align="center">
   <img src="src/assets/logonb.png" width="100" alt="SteamVault Logo"/><br/>
-  SteamVault - Your Personal Steam Library Companion 🎮🔥
+  SteamVault - Your Personal Steam Library Companion 🎮
 </h1>
 
 
@@ -90,7 +90,7 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 > © 2025 Tiago Portilho – Free for personal and educational use.
 
 
-# SteamVault **- Seu Gerenciador de Biblioteca Steam 🎮🔥**
+# SteamVault **- Seu Gerenciador de Biblioteca Steam 🎮**
 
 ## 🛠 Tecnologias Utilizadas:
 
