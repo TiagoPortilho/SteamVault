@@ -45,7 +45,7 @@
 
 ## 🔧 Key Features:
 
-* ✅ **Steam Game Detection** (via API)
+* ✅ **Steam Game Detection (via API)** 
 * ✅ **Game List with Playtime & Achievements**
 * ✅ **Add Personal Guides and Notes**
 * ✅ **Offline Steam Library Tracker**
@@ -133,7 +133,7 @@ O **SteamVault** é um aplicativo desktop que ajuda você a gerenciar e visualiz
 
 ## 🔧 Funcionalidades:
 
-* ✅ **Deteção de Jogos da Steam** (via API ou arquivos locais)
+* ✅ **Deteção de Jogos da Steam (via API)** 
 * ✅ **Lista de Jogos com Tempo de Jogo e Conquistas**
 * ✅ **Adição de Guias e Anotações Pessoais**
 * ✅ **Gerenciamento Offline da Biblioteca Steam**
